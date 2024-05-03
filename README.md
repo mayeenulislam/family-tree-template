@@ -6,12 +6,23 @@ This is the Family Tree template made by Mayeenul Islam with the love of dTree.
 
 > **Note:** Actually I made a family tree for my family in a quick round and thought it might help the others. Hence compiled the code for public. This repository in its **rudimentary shape**.<br>If you make improvement, please don't hesitate to submit Pull Request.
 
+## Screenshots
+
+### Tree View
+
+![Tree View](https://github.com/mayeenulislam/family-tree-template/assets/4551598/9156955a-48cc-4869-ae6e-6ec580d55c39)
+
+### List View (Collapsible)
+
+![List View](https://github.com/mayeenulislam/family-tree-template/assets/4551598/271f1c2c-bb4a-41da-8a8e-81fe4a1a86ff)
+
 ## Features
 
 - Family Tree in Tree View
 - Family Tree as a list
 - Family Tree List has Collapse/Expand feature
 - Bengali Support (`bn`)
+- Responsive and Mobile-friendly
 
 ## Usage
 
