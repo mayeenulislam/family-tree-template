@@ -8,7 +8,7 @@ This is the Family Tree template made by Mayeenul Islam with the love of [dTree]
 
 ### Marriage & Children
 
-```json
+```
 marriages: [
   {
     spouse: {
@@ -27,7 +27,7 @@ marriages: [
 
 ### Person
 
-```json
+```
 {
   name: "ব‍্যক্তির নাম",
   extra: {
