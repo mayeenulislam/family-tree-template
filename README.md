@@ -2,7 +2,7 @@
 
 This is the Family Tree template made by Mayeenul Islam with the love of dTree.
 
-👉 ([Demo: Family Tree in Bengali](https://mayeenulislam.github.io/family-tree-template/))
+👉 [**Demo**: Family Tree in Bengali](https://mayeenulislam.github.io/family-tree-template/)
 
 
 
