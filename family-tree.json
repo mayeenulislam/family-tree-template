@@ -32,7 +32,28 @@
                                 "children": [
                                     {
                                         "name": "বাবা",
-                                        "class": "male"
+                                        "class": "male",
+                                        "marriages": [
+                                            {
+                                                "spouse": {
+                                                    "name": "মা",
+                                                    "class": "female"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "name": "আমি",
+                                                        "class": "male",
+                                                        "extra": {
+                                                            "nickname": "ডাকনাম"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "বোন",
+                                                        "class": "female"
+                                                    }
+                                                ]
+                                            }
+                                        ]
                                     },
                                     {
                                         "name": "চাচা",

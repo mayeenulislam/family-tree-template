@@ -8,17 +8,17 @@ This is the Family Tree template made by Mayeenul Islam with the love of [dTree]
 
 ### Marriage & Children
 
-```
-marriages: [
+```json
+"marriages" : [
   {
-    spouse: {
-      name: "সহধর্মীর নাম",
-      class: "female"
+    "spouse" : {
+      "name" : "সহধর্মীর নাম",
+      "class" : "female"
     },
-    children: [
+    "children" : [
       {
-        name: "সন্তান",
-        class: "male"
+        "name" : "সন্তান",
+        "class" : "male"
       }
     ]
   }
@@ -27,14 +27,14 @@ marriages: [
 
 ### Person
 
-```
+```json
 {
-  name: "ব‍্যক্তির নাম",
-  extra: {
-    nickname: "ডাকনাম"
+  "name" : "ব‍্যক্তির নাম",
+  "extra" : {
+    "nickname" : "ডাকনাম"
   },
-  class: "male",
-  textClass: "emphasis"
+  "class" : "male",
+  "textClass" : "emphasis"
 }
 ```
 
