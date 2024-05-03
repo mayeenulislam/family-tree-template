@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="bn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>বংশলতিকা &bull; পরিবারের সকলে এক জায়গায়</title>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex" />
+        <link rel="icon" type="image/x-icon" href="./favicon.png" />
+
+        <link rel="stylesheet" href="./assets/css/app.css" />
+    </head>
+    <body>
+        <header>
+            <h1 class="site-title">
+                <a href="/" style="text-decoration:none;color:#fff;display:inline-block">
+                    বংশলতিকা &mdash; পরিবারের সকলে এক জায়গায়
+                </a>
+            </h1>
+            <button
+                type="button"
+                id="view-toggle"
+                aria-controls="tree-list"
+                aria-expanded="false"
+            >
+                <svg
+                    id="list-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke="#000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 8h12m-9 4h9m-6 4h6M4 8h.01M7 12h.01M10 16h.01"
+                    />
+                </svg>
+                <svg
+                    id="list-close-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke="#1C274C"
+                        stroke-width="1.5"
+                        d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"
+                        opacity=".5"
+                    />
+                    <path
+                        stroke="#1C274C"
+                        stroke-linecap="round"
+                        stroke-width="1.5"
+                        d="m14.5 9.5-5 5m0-5 5 5"
+                    />
+                </svg>
+                <span id="list-label">তালিকা-আকারে দেখুন</span>
+                <span id="list-close-label">তালিকা বন্ধ করুন</span>
+            </button>
+        </header>
+        <div id="tree-list">
+            <h2 style="margin-bottom:0">তালিকা আকারে...</h2>
+            <p style="margin-bottom:10px;color:#666">প্রতিজন ব্যক্তির নামের উপরে ক্লিক করে খুলুন/বন্ধ করুন</p>
+        </div>
+        <div id="family-tree"></div>
+        <footer>তথ‍্য সর্বশেষ হালনাগাদ: ০১ মে ২০২৪</footer>
+
+        <script src="./assets/js/d3.v4.min.js"></script>
+        <script src="./assets/js/lodash.min.js"></script>
+        <script src="./assets/js/dTree.min.js"></script>
+
+        <script>
+            /**
+             * Convert EN Numerals to BN
+             * @link https://gist.github.com/mayeenulislam/26375d13cb44e7e65b10ef74ffcecab7
+             */
+            String.prototype.getDigitBanglaFromEnglish = function() {
+                var retStr = this;
+                var finalEnlishToBanglaNumber={'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+                for (var x in finalEnlishToBanglaNumber) {
+                    retStr = retStr.replace(new RegExp(x, 'g'), finalEnlishToBanglaNumber[x]);
+                }
+                return retStr;
+            };
+
+            // TOGGLE TREE LIST.
+            var toggleButton = document.querySelector("#view-toggle");
+            var treeList = document.querySelector("#tree-list");
+            toggleButton.addEventListener("click", function (e) {
+                if (treeList.classList.contains("active")) {
+                    this.setAttribute("aria-expanded", false);
+                    treeList.classList.remove("active");
+                } else {
+                    this.setAttribute("aria-expanded", true);
+                    treeList.classList.add("active");
+                }
+            });
+
+            var femaleIcon =
+                '<svg class="icon" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" id="_x32_" width="10" height="10" version="1.1" viewBox="0 0 512 512"><style>.st0{fill:#fff}</style><path d="M256.002 96.898c26.756 0 48.448-21.703 48.448-48.431C304.45 21.675 282.757 0 256.002 0c-26.774 0-48.45 21.675-48.45 48.467 0 26.728 21.675 48.431 48.45 48.431zM371.412 378.74l-50.204-118.046 16.704-84.265c1.737-31.99-22.329-55.974-45.804-55.974h-72.224c-23.466 0-47.531 23.984-45.804 55.974l16.713 84.265-50.212 118.046a17.174 17.174 0 0 0 1.482 16.168 17.147 17.147 0 0 0 14.305 7.689h52.921l13.687 92.918c0 9.097 7.388 16.486 16.494 16.486h33.054c9.115 0 16.494-7.389 16.494-16.486l13.687-92.918h52.921a17.147 17.147 0 0 0 14.305-7.689 17.125 17.125 0 0 0 1.481-16.168z" class="st0"/></svg>';
+            var maleIcon =
+                '<svg class="icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 24 24"><circle cx="12.5" cy="2.5" r="1.75" fill="#000" stroke="#000" stroke-width="1.5"/><path fill="#000" d="M9.5 14.412V7h6v7.412h-2V21h-2v-6.588h-2Z"/><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.5 14.412h-2V7h6v7.412h-2m-2 0V21h2v-6.588m-2 0h2"/></svg>';
+
+            // Function to recursively iterate over JSON data and create ul and li elements
+            function createList(data, isChild = false) {
+                var ul = document.createElement("ul");
+                // ul.setAttribute("data-ul", data[0].name);
+                if (isChild) {
+                    ul.style.display = "none";
+                }
+
+                data.forEach(function (person) {
+                    var personLi = document.createElement("li");
+                    personLi.classList.add("no-child");
+                    //   personLi.setAttribute("data-person", person.name);
+                    if (person.marriages && person.marriages.length > 0) {
+                        person.marriages.forEach(function (marriage) {
+                            var marriageLi = document.createElement("li");
+                            if (marriage?.children?.length) {
+                                marriageLi.classList.add("has-child");
+                            } else {
+                                marriageLi.classList.add("no-child");
+                            }
+                            //   marriageLi.setAttribute("data-marriage", person.name);
+                            var personName = person?.extra?.nickname
+                                ? `${person.name} (${person.extra.nickname})`
+                                : person.name;
+                            var spouseName = marriage.spouse?.extra?.nickname
+                                ? `${marriage.spouse.name} (${marriage.spouse.extra.nickname})`
+                                : marriage.spouse.name;
+
+                            var btn = '<button class="list-button">';
+                            btn += `${personName} + ${spouseName}`;
+                            if (marriage?.children?.length) {
+                                btn += ` <span class="child-count" title="${marriage?.children?.length} সন্তান">${marriage?.children?.length.toString().getDigitBanglaFromEnglish()}</span>`;
+                            }
+                            btn += "</button>";
+                            marriageLi.innerHTML += btn;
+
+                            if (
+                                marriage.children &&
+                                marriage.children.length > 0
+                            ) {
+                                var childrenUl = createList(
+                                    marriage.children,
+                                    true
+                                );
+                                marriageLi.appendChild(childrenUl);
+                            }
+
+                            ul.appendChild(marriageLi);
+                        });
+                    } else {
+                        var personName = person?.extra?.nickname
+                            ? `${person.name} (${person.extra.nickname})`
+                            : person.name;
+                        personLi.textContent = personName;
+                        ul.appendChild(personLi);
+                    }
+                });
+
+                return ul;
+            }
+
+            fetch("./family-tree.json")
+                .then((response) => response.text())
+                .then((text) => {
+                    var treeData = JSON.parse(text);
+
+                    // Create the list and append it to the dataContainer div
+                    var list = createList(treeData);
+                    treeList.appendChild(list);
+
+                    dTree.init(treeData, {
+                        target: "#family-tree",
+                        debug: true,
+                        height: 800,
+                        width: 1200,
+                        callbacks: {
+                            textRenderer: function (
+                                name,
+                                extra,
+                                textClass,
+                                nodeClass
+                            ) {
+                                // THis callback is optinal but can be used to customize
+                                // how the text is rendered without having to rewrite the entire node
+                                // from scratch.
+                                if (extra && extra.nickname)
+                                    name = name + " (" + extra.nickname + ")";
+                                var icon =
+                                    nodeClass === "male"
+                                        ? maleIcon
+                                        : femaleIcon;
+
+                                return (
+                                    "<p align='center' class='" +
+                                    textClass +
+                                    "'>" +
+                                    icon +
+                                    " " +
+                                    name +
+                                    "</p>"
+                                );
+                            },
+                            nodeRenderer: function (
+                                name,
+                                x,
+                                y,
+                                height,
+                                width,
+                                extra,
+                                id,
+                                nodeClass,
+                                textClass,
+                                textRenderer
+                            ) {
+                                // This callback is optional but can be used to customize the
+                                // node element using HTML.
+                                var node = "";
+                                if ("?" === name) {
+                                    nodeClass += " empty";
+                                }
+
+                                node += "<div ";
+                                node += 'style="width:100%;height:100%" ';
+                                node += 'class="' + nodeClass + '" ';
+                                node += 'id="node' + id + '">\n';
+                                node += textRenderer(
+                                    name,
+                                    extra,
+                                    textClass,
+                                    nodeClass
+                                );
+                                node += "</div>";
+                                return node;
+                            },
+                        },
+                    });
+                });
+
+            /**
+             * Show/Hide List items.
+             */
+            document.addEventListener("click", function (event) {
+                var target = event.target;
+                if (target && target.classList.contains("list-button")) {
+                    var nestedUl = target.parentElement.querySelector("ul");
+                    if (nestedUl) {
+                        target.classList.toggle('active');
+                        if (nestedUl.style.display === "none") {
+                            nestedUl.style.display = "block";
+                        } else {
+                            nestedUl.style.display = "none";
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

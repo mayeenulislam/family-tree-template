@@ -1,0 +1,81 @@
+[
+    {
+        "name": "দাদার দাদা",
+        "class": "male",
+        "textClass": "emphasis",
+        "extra": {
+            "nickname": "ডাকনাম"
+        },
+        "marriages": [
+            {
+                "spouse": {
+                    "name": "দাদার মা",
+                    "class": "female",
+                    "extra": {
+                        "nickname": "ডাকনাম"
+                    }
+                },
+                "children": [
+                    {
+                        "name": "বড় দাদা",
+                        "class": "male",
+                        "textClass": "emphasis",
+                        "extra": {
+                            "nickname": "ডাকনাম"
+                        },
+                        "marriages": [
+                            {
+                                "spouse": {
+                                    "name": "বড় দাদী",
+                                    "class": "female"
+                                },
+                                "children": [
+                                    {
+                                        "name": "বাবা",
+                                        "class": "male"
+                                    },
+                                    {
+                                        "name": "চাচা",
+                                        "class": "male"
+                                    },
+                                    {
+                                        "name": "ফুফু",
+                                        "class": "female"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "ছোট দাদা",
+                        "class": "male",
+                        "extra": {
+                            "nickname": "ডাকনাম"
+                        },
+                        "marriages": [
+                            {
+                                "spouse": {
+                                    "name": "ছোট দাদী",
+                                    "class": "female"
+                                },
+                                "children": [
+                                    {
+                                        "name": "চাচা",
+                                        "class": "male",
+                                        "extra": {
+                                            "nickname": "ডাকনাম"
+                                        }
+                                    },
+                                    {
+                                        "name": "ফুফু",
+                                        "class": "female"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

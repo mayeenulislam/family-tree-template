@@ -1,0 +1,298 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+    font-family: -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji";
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 2px solid #186e87;
+  background-color: #1c97bb;
+  color: #fff;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  z-index: 3;
+}
+
+header h1 {
+  text-align: center;
+}
+
+@media (min-width: 440px) {
+  header {
+    flex-direction: row;
+  }
+
+  header h1 {
+    text-align: left;
+  }
+}
+
+.site-title {
+  margin: 0;
+}
+
+#view-toggle {
+  background-color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+#view-toggle[aria-expanded="true"] {
+  background-color: #bb4444;
+  color: #fff;
+}
+
+#view-toggle[aria-expanded="true"] svg path {
+  stroke: #fff;
+}
+
+#list-icon {
+  vertical-align: middle;
+  display: none;
+}
+
+#list-close-icon {
+  vertical-align: middle;
+  display: none;
+}
+
+#list-label,
+#list-close-label {
+  display: none;
+}
+
+#view-toggle[aria-expanded="false"] #list-icon,
+#view-toggle[aria-expanded="false"] #list-label {
+  display: inline-block;
+}
+
+#view-toggle[aria-expanded="true"] #list-close-icon,
+#view-toggle[aria-expanded="true"] #list-close-label {
+  display: inline-block;
+}
+
+#tree-list {
+  position: absolute;
+  top: 63px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 1;
+  padding: 10px;
+  font-size: 15px;
+  display: none;
+}
+
+#tree-list.active {
+  display: block;
+}
+
+.list-button {
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+#tree-list li.has-child > button::before {
+    content: url(../images/plus.svg);
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    position: absolute;
+    left: -23px;
+    top: 1px;
+    color: #ccc;
+}
+
+#tree-list li.has-child > button.active::before {
+    content: url(../images/minus.svg);
+    background-color: #fff;
+}
+
+.no-child {
+  cursor: not-allowed;
+  color: #777;
+}
+
+.child-count {
+  background-color: #1c97bb;
+  color: #fff;
+  border: 1px solid blue;
+  border-radius: 5px;
+  display: inline-block;
+  text-align: center;
+  padding: 0 5px;
+  line-height: 16px;
+}
+
+#family-tree {
+  margin-top: 63px;
+  width: 100%;
+  height: calc(100vh - 63px);
+}
+
+@media (min-width: 440px) {
+  #tree-list {
+    top: 42px;
+  }
+
+  #family-tree {
+    margin-top: 42px;
+    height: calc(100vh - 42px);
+  }
+}
+
+#family-tree > svg {
+    width: 100%;
+    height: 100%;
+}
+
+.linage {
+    fill: none;
+    stroke: #000;
+}
+
+.icon {
+  vertical-align: middle;
+}
+
+.icon circle,
+.icon path {
+  fill: #fff;
+  stroke: #fff;
+}
+
+.marriage {
+    fill: none;
+    stroke: black;
+}
+
+.male {
+    background-color: #0a857b;
+    color: #fff;
+    border: 1px solid #054742;
+    box-sizing: border-box;
+}
+
+.female {
+    background-color: #9a0f8a;
+    color: #fff;
+    border: 1px solid #57084e;
+    box-sizing: border-box;
+}
+
+.empty {
+  background-color: #ccc;
+  color: #fff;
+  border-color: #ddd;
+}
+
+.emphasis {
+  font-weight: bold;
+    /* font-style: italic; */
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+footer {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 2px 5px;
+  z-index: 1;
+  border-radius: 5px 5px 0 0;
+}
+
+
+/* Reset default list styles */
+#tree-list ul, #tree-list li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Style the family tree */
+#tree-list ul {
+  margin-left: 15px; /* Adjust indentation */
+}
+
+#tree-list ul ul {
+  margin-left: 15px; /* Adjust indentation */
+}
+
+#tree-list li {
+  margin-bottom: 10px; /* Adjust vertical spacing */
+  position: relative;
+}
+
+/* Style the connectors */
+#tree-list li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -14px; /* Adjust horizontal position */
+  height: 100%;
+}
+
+#tree-list > ul > li::before {
+  border-left: 2px solid #000;
+}
+
+#tree-list > ul ul > li::before {
+  border-left: 2px solid red;
+}
+
+#tree-list > ul ul ul > li::before {
+  border-left: 2px solid green;
+}
+
+#tree-list > ul ul ul ul > li::before {
+  border-left: 2px solid blue;
+}
+
+#tree-list > ul ul ul ul ul > li::before {
+  border-left: 2px solid orange;
+}
+
+#tree-list > ul ul ul ul ul ul > li::before {
+  border-left: 2px solid purple;
+}
+
+#tree-list > ul ul ul ul ul ul ul > li::before {
+  border-left: 2px solid mediumvioletred;
+}
+
+#tree-list > ul ul ul ul ul ul ul ul > li::before {
+  border-left: 2px solid orangered;
+}
+
+/* Style the family members */
+#tree-list li > ul > li {
+  margin-left: 15px; /* Adjust indentation */
+}
+
+/* Style the leaf nodes */
+#tree-list li > ul > li > ul > li {
+  margin-left: 15px; /* Adjust indentation */
+}
